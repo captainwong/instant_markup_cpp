@@ -19,6 +19,7 @@
 #include <vector>
 using namespace std;
 
+/*
 inline string& trim(string& s)
 {
 	//if(s.empty())
@@ -27,7 +28,7 @@ inline string& trim(string& s)
 	s.erase(s.find_last_not_of(" ") + 1);
 	return s;
 }
-
+*/
 // TODO: reference additional headers your program requires here
 
 //{{AFX_INSERT_LOCATION}}

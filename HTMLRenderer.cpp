@@ -93,18 +93,18 @@ void CHTMLRenderer::end_title()
 	cout << "</h1>" << endl;
 }
 
-string CHTMLRenderer::sub_emphasis(const string &content)
+string CHTMLRenderer::sub_emphasis()
 {
-	return "<em>$001</em>\n";
+	return "<em>$001</em>";
 }
 
-string CHTMLRenderer::sub_url(const string &content)
+string CHTMLRenderer::sub_url()
 {
-	return "<a href=\"$001\">$001</a>\n";
+	return "<a href=\"$001\">$001</a>";
 }
 
-string CHTMLRenderer::sub_mail(const string &content)
+string CHTMLRenderer::sub_mail()
 {
-	return "<a href=\"mailto:$001\">$001</a>\n";
+	return "<a href=\"mailto:$001\">$001</a>";
 }
 

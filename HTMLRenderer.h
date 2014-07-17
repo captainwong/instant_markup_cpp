@@ -14,9 +14,9 @@
 class CHTMLRenderer : public CHandler  
 {
 public:
-	string sub_mail(const string& content);
-	string sub_url(const string& content);
-	string sub_emphasis(const string& content);
+	string sub_mail();
+	string sub_url();
+	string sub_emphasis();
 	void end_title();
 	void start_title();
 	void end_listitem();

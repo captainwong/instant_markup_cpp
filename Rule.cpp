@@ -33,7 +33,7 @@ bool CRule::action(const string &block, CHandler *handler)
 bool CListItemRule::action(const string& block, CHandler* handler)
 {
 	handler->start(m_type);
-	handler->feed(block.substr(block.size() - 1, 1));
+	handler->feed(block.substr(1, block.size() - 1));
 	handler->end(m_type);
 	return true;
 }

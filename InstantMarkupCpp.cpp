@@ -3,11 +3,9 @@
 #include "stdafx.h"
 #include "Handler.h"
 #include "Rule.h"
-#include "D:/global/deelx.h"
+#include "deelx.h"
 #include "HTMLRenderer.h"
 #include "stdio.h"
-
-
 
 class CParser
 {
@@ -44,19 +42,24 @@ public:
 		_BLOCK blocks;
 		while(std::getline(in, line)){
 			//line = trim(line);
-			if(!line.empty())
-				block += line + '\n';
-			else if(!block.empty()){
+			if(!line.empty()){
+				block.empty() ? (block += line) : (block += " " + line);
+			}else if(!block.empty()){
 				blocks.push_back(block);
 				block = "";
 			}
+		}
+
+		if(!block.empty()){	// last line
+			blocks.push_back(block);
+			block = "";
 		}
 
 		for(block_iter biter = blocks.begin(); biter != blocks.end(); biter++){
 			block = *biter;
 			for(iter_filter fiter = m_filters.begin(); fiter != m_filters.end(); fiter++){
 				pFilter p = *fiter;
-				filtering(block, p->_pattern, p->_name, m_handler);
+				block = filtering(block, p->_pattern, p->_name, m_handler);
 			}
 			for(rule_iter riter = m_rules.begin(); riter != m_rules.end(); riter++){
 				CRule *rule = *riter;
@@ -70,19 +73,19 @@ public:
 protected:
 	string filtering(const string& block, const string& pattern,
 				const string& sub_name, CHandler* handler){
-		static CRegexpT <char> regexp(pattern.c_str());
-		MatchResult result = regexp.MatchExact(block.c_str());
+		static CRegexpT <char> regexp;
+		regexp.Compile(pattern.c_str());
+		MatchResult result = regexp.Match(block.c_str());
 		if(result.IsMatched()){
 			char* content = regexp.Replace(block.c_str(),
 				handler->sub(sub_name).c_str());
 			string new_block(content);
-			delete content;
+			regexp.ReleaseString(content);
 			return new_block;
 		}
 		return block;
 	}
 protected:
-	//
 	CHandler* m_handler;
 	vector<CRule*> m_rules;
 	typedef vector<CRule*>::iterator rule_iter;
@@ -122,13 +125,6 @@ private:
 int main(int argc, char** argv)
 {
 	CHTMLRenderer handler;
-	
-	/*for(CHandler::funcmap_iter iter = CHandler::m_funcmap.begin(); 
-		iter != CHandler::m_funcmap.end(); iter++)
-	{
-		cout << "key: " << iter->first << " value: " << iter->second << endl;
-	}
-	*/
 	CBasicTextParser parser(&handler);
 	parser.parse(cin);
 	return 0;

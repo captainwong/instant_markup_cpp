@@ -28,11 +28,11 @@ public:
 	virtual ~CHeadingRule(){}
 	virtual bool condition(const string& block){
 		do{
-			if(block.find('\n'))
+			if(block.find('\n') != string::npos)
 				break;
 			if(block.length() > 70)
 				break;
-			if(block.end() && *(block.end()) == ':')
+			if(block[block.size() - 1] == ':')
 				break;
 			return true;
 		}while(0);

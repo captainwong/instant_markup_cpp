@@ -24,12 +24,6 @@ CHandler::~CHandler()
 
 void CHandler::callback(const string &str)
 {
-	/*if(m_funcmap.count(str))
-		(this->*(m_funcmap[str]))();
-	else
-		cout << "invalid function name." << endl;
-	*/
-
 	funcmap_iter iter = m_funcmap.find(str);
 	if(iter != m_funcmap.end())
 		(this->*(iter->second))();

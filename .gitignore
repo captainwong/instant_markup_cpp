@@ -15,3 +15,7 @@
 *.sbr
 *.bsc
 *.map
+
+Debug/
+Release/
+.vs/
